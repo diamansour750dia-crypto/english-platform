@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCA English Platform | Mansour & Kevin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .uca-blue { background-color: #004a99; }
+        .uca-red { background-color: #e60028; }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 flex h-screen overflow-hidden">
+
+    <div id="auth-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/95 backdrop-blur-md">
+        <div class="bg-white w-full max-w-md p-10 rounded-[2.5rem] shadow-2xl text-center border-t-8 border-blue-700">
+            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/3/3a/Logo_Universit%C3%A9_Clermont_Auvergne_2021.svg/1200px-Logo_Universit%C3%A9_Clermont_Auvergne_2021.svg.png" 
+                 class="h-14 mx-auto mb-8" alt="UCA Logo">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Create Account</h2>
+            <p class="text-slate-500 mb-8 font-medium">Join the 100-module English program.</p>
+            
+            <div class="space-y-4">
+                <input type="text" id="user-name" placeholder="Full Name" 
+                       class="w-full p-4 bg-slate-100 rounded-2xl border-none focus:ring-2 focus:ring-blue-600 outline-none font-semibold">
+                <input type="email" id="user-email" placeholder="University Email (@etu.uca.fr)" 
+                       class="w-full p-4 bg-slate-100 rounded-2xl border-none focus:ring-2 focus:ring-blue-600 outline-none font-semibold">
+                <input type="password" placeholder="Password" 
+                       class="w-full p-4 bg-slate-100 rounded-2xl border-none focus:ring-2 focus:ring-blue-600 outline-none font-semibold">
+                
+                <button type="button" onclick="startLearning()" class="w-full py-5 uca-blue text-white font-bold rounded-2xl shadow-xl hover:opacity-90 transition-all transform hover:scale-105 active:scale-95">
+                    Enter Classroom
+                </button>
+            </div>
+            <p class="mt-6 text-[10px] text-slate-400 uppercase tracking-widest font-bold">Project by Mansour Dia & Kevin Gové</p>
+        </div>
+    </div>
+
+    <aside id="main-sidebar" class="w-80 bg-slate-900 text-white flex flex-col shadow-2xl hidden">
+        <div class="p-6 bg-white border-b-4 border-blue-700">
+            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/3/3a/Logo_Universit%C3%A9_Clermont_Auvergne_2021.svg/1200px-Logo_Universit%C3%A9_Clermont_Auvergne_2021.svg.png" 
+                 alt="UCA Logo" class="h-10 mx-auto">
+        </div>
+        
+        <div class="p-5 bg-slate-800/50">
+            <div class="flex justify-between items-center mb-2 text-[10px] font-black uppercase text-slate-400 tracking-widest">
+                <span>Progress</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-700 rounded-full h-2">
+                <div id="progress-bar" class="bg-emerald-500 h-2 rounded-full transition-all duration-700" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="sidebar-scroll flex-grow overflow-y-auto p-4 space-y-8">
+            <div>
+                <h3 class="text-blue-400 text-[10px] font-black uppercase tracking-tighter mb-4 px-2">Grammar (50 Lessons)</h3>
+                <div id="grammar-menu" class="space-y-1"></div>
+            </div>
+            <div>
+                <h3 class="text-red-400 text-[10px] font-black uppercase tracking-tighter mb-4 px-2">Vocabulary (50 Lessons)</h3>
+                <div id="vocab-menu" class="space-y-1"></div>
+            </div>
+        </div>
+
+        <div class="p-5 bg-black border-t border-slate-800 text-center">
+            <p class="text-xs font-bold text-white">Mansour Dia & Kevin Gové</p>
+            <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">UCA Project 2026</p>
+        </div>
+    </aside>
+
+    <main id="main-content" class="flex-grow overflow-y-auto hidden bg-white">
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 p-6 sticky top-0 z-10 flex justify-between items-center">
+            <h1 class="text-xs font-black text-slate-400 uppercase tracking-widest">English for Students</h1>
+            <div class="flex items-center gap-4">
+                <span id="display-user-name" class="font-bold text-slate-700">User</span>
+                <div class="h-10 w-10 rounded-full uca-blue flex items-center justify-center text-white font-bold text-sm shadow-inner">UCA</div>
+            </div>
+        </header>
+
+        <div class="p-10 max-w-5xl mx-auto">
+            <div id="welcome-view" class="py-20 text-center">
+                <div class="uca-blue w-24 h-24 rounded-3xl rotate-6 mx-auto mb-8 flex items-center justify-center shadow-2xl">
+                    <span class="text-white text-4xl font-extrabold italic">En</span>
+                </div>
+                <h2 id="welcome-title" class="text-5xl font-black text-slate-900 mb-6 leading-tight">Welcome to Class!</h2>
+                <p class="text-slate-500 text-xl max-w-xl mx-auto leading-relaxed">Choose one of the 100 specialized modules from the sidebar to begin your professional training.</p>
+            </div>
+
+            <div id="lesson-view" class="hidden space-y-10">
+                <div class="bg-white rounded-[2.5rem] p-10 shadow-xl border border-slate-100">
+                    <span id="lesson-tag" class="text-[11px] font-black text-white px-4 py-1.5 rounded-full uppercase mb-6 inline-block">Category</span>
+                    <h2 id="lesson-title" class="text-4xl font-black text-slate-900 mb-8 border-b border-slate-100 pb-6">Lesson Title</h2>
+                    <div id="lesson-text" class="text-slate-600 text-xl leading-relaxed space-y-6"></div>
+                </div>
+
+                <div id="quiz-box" class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="uca-red h-4 w-4 rounded-full animate-pulse shadow-[0_0_15px_#e60028]"></div>
+                        <h3 class="text-2xl font-bold uppercase tracking-tight">Validation Quiz</h3>
+                    </div>
+                    <p id="quiz-question" class="text-xl mb-10 text-slate-300 font-medium"></p>
+                    <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+                    <div id="quiz-feedback" class="mt-8 hidden p-6 rounded-2xl text-center font-bold text-xl italic"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // DATA ARRAYS
+        const grammarData = ["Present Simple", "Present Continuous", "Past Simple", "Past Continuous", "Present Perfect", "Past Perfect", "Future Simple", "Going to", "Modals: Can/Could", "Modals: Must/Should", "Zero Conditional", "First Conditional", "Second Conditional", "Third Conditional", "Passive Voice Pres", "Passive Voice Past", "Reported Speech", "Reported Questions", "Relative Clauses", "Non-Defining Clauses", "Gerunds", "Infinitives", "Articles: A/An", "Article: THE", "Zero Article", "Countable Nouns", "Uncountable Nouns", "Comparatives Short", "Comparatives Long", "Superlatives", "Adverbs of Frequency", "Prepositions Time", "Prepositions Place", "Question Tags", "Used to / Would", "Possessive Pronouns", "Reflexive Pronouns", "Quantifiers: Some/Any", "Quantifiers: Much/Many", "Quantifiers: Few/Little", "Causative Verbs", "Wish / If only", "Linking Words Contrast", "Linking Words Result", "Direct Objects", "Indirect Objects", "Compound Nouns", "Adjective Order", "Phrasal Verbs Intro", "Academic Syntax"];
+
+        const vocabData = ["Academic Greetings", "University Terms", "Engineering Basics", "Electronics Intro", "Circuits & Logic", "Software Design", "Programming Terms", "Artificial Intelligence", "Mathematics", "Physics Laboratory", "Chemistry Materials", "Mechanical Systems", "Civil Engineering", "Data & Research", "Thesis Writing", "Professional Emails", "Meeting Language", "Presentations", "Public Speaking", "Job Applications", "The Workplace", "Business Finance", "Banking Terms", "Trade & Commerce", "Technology News", "Aviation English", "Hospitality Management", "Sustainable Energy", "Nature & Wildlife", "Environmental Science", "Climate Change", "Social Media Terms", "Cybersecurity", "Human Anatomy", "Medical Science", "Sports Science", "Architecture", "Cinema & Media", "Music & Acoustics", "Literature Study", "Law & Justice", "Political Science", "Geography", "History Vocabulary", "Time Management", "Formal vs Informal", "British vs American", "Technical Reports", "Scientific Methodology", "The Innovation Cycle"];
+
+        let progressCount = new Set();
+
+        // 1. START LEARNING FUNCTION (SIGN UP FIX)
+        function startLearning() {
+            const name = document.getElementById('user-name').value.trim();
+            const email = document.getElementById('user-email').value.trim();
+            
+            if (name === "" || email === "") {
+                alert("Please enter your name and email.");
+                return;
+            }
+
+            // Hide the login screen
+            document.getElementById('auth-overlay').style.display = 'none';
+            
+            // Show the main application components
+            document.getElementById('main-sidebar').classList.remove('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            
+            // Update names in the dashboard
+            document.getElementById('display-user-name').innerText = name;
+            document.getElementById('welcome-title').innerText = `Welcome, ${name}!`;
+            
+            // Initialize menus
+            initMenus();
+        }
+
+        // 2. RENDER SIDEBAR MENUS
+        function initMenus() {
+            const gMenu = document.getElementById('grammar-menu');
+            const vMenu = document.getElementById('vocab-menu');
+            gMenu.innerHTML = ""; vMenu.innerHTML = "";
+
+            grammarData.forEach((title, i) => {
+                const btn = createMenuBtn(title, i + 1, "Grammar");
+                gMenu.appendChild(btn);
+            });
+
+            vocabData.forEach((title, i) => {
+                const btn = createMenuBtn(title, i + 51, "Vocabulary");
+                vMenu.appendChild(btn);
+            });
+        }
+
+        function createMenuBtn(title, num, cat) {
+            const btn = document.createElement('button');
+            btn.className = "w-full text-left p-3 rounded-xl text-[12px] font-semibold text-slate-400 hover:bg-slate-800 hover:text-white transition-all flex justify-between items-center mb-1";
+            btn.innerHTML = `<span>${num}. ${title}</span> <span class="check-mark hidden text-emerald-500">✓</span>`;
+            btn.onclick = () => loadLesson(title, cat);
+            btn.id = `btn-${title.replace(/\s+/g, '')}`;
+            return btn;
+        }
+
+        // 3. LOAD LESSON VIEW
+        function loadLesson(title, category) {
+            document.getElementById('welcome-view').classList.add('hidden');
+            document.getElementById('lesson-view').classList.remove('hidden');
+
+            const tag = document.getElementById('lesson-tag');
+            tag.innerText = category;
+            tag.style.backgroundColor = category === 'Grammar' ? '#004a99' : '#e60028';
+            
+            document.getElementById('lesson-title').innerText = title;
+            document.getElementById('lesson-text').innerHTML = `
+                <p>Welcome to the module on <b>${title}</b>. This lesson is tailored for students at <b>University Clermont Auvergne</b>.</p>
+                <p>Understanding <b>${title}</b> is a core skill for technical writing and academic success. Mansour and Kevin have designed this content to help you achieve professional clarity.</p>
+                <p><i>Action:</i> Read the materials provided above. Once you feel confident, complete the quiz below to validate your progress.</p>
+            `;
+
+            document.getElementById('quiz-question').innerText = `Do you feel confident applying the principles of "${title}"?`;
+            const options = document.getElementById('quiz-options');
+            options.innerHTML = `
+                <button onclick="checkQuiz(true)" class="bg-slate-800 hover:bg-emerald-600 p-5 rounded-2xl text-left transition-all border border-slate-700 font-bold">Yes, Validate Lesson</button>
+                <button onclick="checkQuiz(false)" class="bg-slate-800 hover:bg-red-600 p-5 rounded-2xl text-left transition-all border border-slate-700 font-bold">No, Review Again</button>
+            `;
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 4. VALIDATE QUIZ
+        function checkQuiz(isCorrect) {
+            const fb = document.getElementById('quiz-feedback');
+            fb.classList.remove('hidden');
+            
+            if(isCorrect) {
+                fb.innerText = "Module Validated! Good Job.";
+                fb.className = "mt-8 p-6 rounded-2xl text-center font-bold text-xl bg-emerald-500 text-white";
+                
+                const currentTitle = document.getElementById('lesson-title').innerText;
+                progressCount.add(currentTitle);
+                
+                // Sidebar Checkmark
+                const btnId = `btn-${currentTitle.replace(/\s+/g, '')}`;
+                const check = document.querySelector(`#${btnId} .check-mark`);
+                if(check) check.classList.remove('hidden');
+                
+                updateProgress();
+            } else {
+                fb.innerText = "Please review the lesson text above.";
+                fb.className = "mt-8 p-6 rounded-2xl text-center font-bold text-xl bg-red-600 text-white";
+            }
+        }
+
+        function updateProgress() {
+            const total = 100;
+            const percent = Math.round((progressCount.size / total) * 100);
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-text').innerText = `${percent}%`;
+        }
+    </script>
+</body>
+</html>
